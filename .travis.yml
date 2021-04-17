@@ -5,7 +5,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t emaynewrelic/react-test -f ./client/Dockerfile.dev ./client
+ - docker build -t emaynewrelic/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run -e CI=true emaynewrelic/react-test npm test
@@ -17,6 +17,7 @@ after_success:
   - docker build -t emaynewrelic/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin docker.io
+  - echo $DOCKER_ID
   # Take those images and push them to docker hub
   - docker push emaynewrelic/multi-client
   - docker push emaynewrelic/multi-nginx
